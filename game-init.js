@@ -3,8 +3,8 @@
 const canvas = document.getElementById('court');
 const ctx = canvas.getContext('2d');
 
-canvas.width = canvas.offsetWidth;
-canvas.height = canvas.offsetHeight;
+canvas.width = 720;
+canvas.height = 320;
 
 // Default attributes for players, all attributes are 0-20
 const defaultAttributes = {
@@ -38,8 +38,39 @@ function drawCourt() {
     ctx.stroke();
 }
 
+function drawRims() {
+    // Draw left rim
+    ctx.beginPath();
+    ctx.arc(25, canvas.height / 2, 20, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0, 0, 0, 0)'; // See thru
+    ctx.fill();
+    ctx.lineWidth = 8; // Thick outline
+    ctx.strokeStyle = '#000000'; // Black
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(25, canvas.height / 2, 20, 0, Math.PI * 2);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#FFA500'; // Orange outline
+    ctx.stroke();
+
+    // Draw right rim
+    ctx.beginPath();
+    ctx.arc(canvas.width - 25, canvas.height / 2, 20, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0, 0, 0, 0)'; // See thru
+    ctx.fill();
+    ctx.lineWidth = 8; // Thick outline
+    ctx.strokeStyle = '#000000'; // Black
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(canvas.width - 25, canvas.height / 2, 20, 0, Math.PI * 2);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#FFA500'; // Orange outline
+    ctx.stroke();
+}
+
 function render() {
     drawCourt();
+    drawRims();
     players.forEach(p => {
         p.update();
         p.draw(ctx);
