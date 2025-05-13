@@ -6,9 +6,23 @@ const ctx = canvas.getContext('2d');
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
 
-const players = [
-    { x: 100, y: 100 }
-];
+// Default attributes for players, all attributes are 0-20
+const defaultAttributes = {
+    name: "Bill Bonson",
+    speed: 20,
+    finishing: 20,
+    jumpShooting: 20,
+    ballHandling: 20,
+    perimiterDefense: 20,
+    paintDefense: 20,
+    height: 20
+};
+
+// Create player instances
+const players = [];
+for (let i = 0; i < 1; i++) {
+    players.push(new Player(defaultAttributes, 100 + i * 80, 150));
+}
 
 // Draw basketball court background
 function drawCourt() {
@@ -24,22 +38,12 @@ function drawCourt() {
     ctx.stroke();
 }
 
-// Draw players as circles
-function drawPlayers() {
-    players.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 10, 0, Math.PI * 2);
-        ctx.fillStyle = '#FF0000'; // red player
-        ctx.fill();
-        ctx.strokeStyle = '#000000';
-        ctx.stroke();
-    });
-}
-
-// Main draw loop
 function render() {
     drawCourt();
-    drawPlayers();
+    players.forEach(p => {
+        p.update();
+        p.draw(ctx);
+    });
     requestAnimationFrame(render);
 }
 
